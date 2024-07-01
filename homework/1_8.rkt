@@ -13,8 +13,8 @@
 (define (improve guess x)
   (/ (+ (* 2 guess) (/ x (* guess guess))) 3))
 
-(define (croot x) (croot-iter 1000 1.0 x))
+(define (croot x) (croot-iter x 1.0 x))
 
 ; runs
-(croot 1000)
+(croot 1000000)
 (croot 1)
