@@ -1,0 +1,42 @@
+#lang sicp
+(define (square n) (* n n))
+(define (smallest-divisor n) (find-divisor n 2))
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (+ test-divisor 1))))) (define (divides? a b) (= (remainder b a) 0))
+
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+(define (timed-prime-test n)
+  (start-prime-test n (runtime)))
+(define (start-prime-test n start-time)
+  (if (prime? n)
+      (report-prime (- (runtime) start-time) n) #f))
+(define (report-prime elapsed-time prime)
+  (newline)
+  (display prime)
+  (display " *** ")
+  (display elapsed-time)
+  #t
+  )
+
+(define (first-prime start)
+  (if (timed-prime-test start) start
+      (first-prime (+ 2 start)))
+  )
+(define (first-n n start)
+  (define (first-n-iter start acc)
+    (if (= n (length acc)) acc
+        (let ((fp (first-prime start)))
+          (first-n-iter (+ fp 2) (append acc (list fp)))
+          )
+        )
+    )
+  (first-n-iter start '())
+  )
+(first-n 3 1000000001)
+(first-n 3 10000000001)
+(first-n 3 100000000001)
+(first-n 3 1000000000001)
