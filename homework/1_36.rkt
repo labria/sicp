@@ -1,0 +1,33 @@
+#lang sicp
+(define (average x y) (/ (+ x y) 2))
+(define tolerance 0.00001)
+(define (fixed-point f first-guess)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) tolerance))
+  (define (try guess step)
+    (display step)
+    (newline)
+    (let ((next (f guess)))
+      (display (exact->inexact next))
+      (newline)
+      (if (close-enough? guess next)
+          next
+          (try next (+ 1 step)))))
+  (try first-guess 1))
+
+(define (fixed-point-damp f first-guess)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) tolerance))
+  (define (try guess step)
+    (display step)
+    (newline)
+    (let ((next (f guess)))
+      (display (exact->inexact next))
+      (newline)
+      (if (close-enough? guess next)
+          next
+          (try (average guess next) (+ 1 step)))))
+  (try first-guess 1))
+
+(exact->inexact (fixed-point (lambda (x) (/ (log 1000) (log x))) 2))
+(exact->inexact (fixed-point-damp (lambda (x) (/ (log 1000) (log x))) 2))
