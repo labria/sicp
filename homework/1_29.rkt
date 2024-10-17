@@ -34,5 +34,5 @@
 
 (i cube 0 1 20)
 
-(i square 0 1 1000000000)
-(i square 0 1 10)
+(i square 0 1 1000)
+(i square 0 1 2)
