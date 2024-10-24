@@ -1,0 +1,47 @@
+#lang sicp
+
+(define (square n) (* n n))
+
+(define (fast-expt b n)
+  (cond ((= n 0) 1)
+        ((even? n) (square (fast-expt b (/ n 2))))
+        (else (* b (fast-expt b (- n 1))))))
+
+(define (cons x y)
+  (* (fast-expt 2 x) (fast-expt 3 y))
+)
+
+(define (car x)
+  (define (next x n)
+    (if (odd? x) n (next (/ x 2) (+ 1 n)))
+  )
+  (next x 0)
+)
+
+(define (cdr x)
+  (define (next x n)
+    (if (= x 1) n (next (/ x 3) (+ 1 n)))
+  )
+  (define (oddify x)
+    (if (odd? x) x (oddify (/ x 2)))
+  )
+  (next (oddify x) 0)
+)
+
+(car 36)
+(cdr 36)
+
+(let ((a (cons 10 20))
+      (b (cons 0 10)))
+            (display a)
+      (newline)
+            (display b)
+      (newline)
+      (display (car a))
+      (newline)
+      (display (cdr a))
+      (newline)
+      (display (car b))
+      (newline)
+      (display (cdr b))
+      )
