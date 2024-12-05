@@ -66,7 +66,5 @@
 (define (first) (lambda (x y) x))
 (define (rest) (lambda (x y) y))
 
-(pair (lambda (p q) p))   
-
 (define (car z) (z first))
 (define (cdr z) (z rest))

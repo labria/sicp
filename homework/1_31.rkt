@@ -15,6 +15,7 @@
 
 (define (wallis n)
   (/ (square (double n)) (* (- (double n) 1) (+ (double n) 1)))
+  ;; 4*4/3*5 6*6/5*7
 )
 (fac 5)
 (define (pi n) 
