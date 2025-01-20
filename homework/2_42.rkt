@@ -67,22 +67,21 @@ nil
 (define (prime? n)
   (= n (smallest-divisor n)))
 
-(and )
+(define (all? fun . lists) (accumulate (lambda (a b) (and a b)) #t (apply map (cons fun lists))))
 
 (define (queens board-size) 
-  (define (empty-board) nil)
+  (define empty-board nil)
   (define (safe? k p) 
-    (let ((ups (enumerate-interval 1 (- k 1))))
+    (let ((offsets (enumerate-interval 1 (- k 1))))
       (and 
-        (accumulate (lambda (a b) (and a b)) #t (map (lambda (pos)  (not (= (car p) pos))) (cdr p)))
-        (accumulate (lambda (a b) (and a b)) #t (map (lambda (pos offset)  (not (= (car p) (+ offset pos)))) (cdr p) ups))
-        (accumulate (lambda (a b) (and a b)) #t (map (lambda (pos offset)  (not (= (car p) (- pos offset)))) (cdr p) ups)))
-      ))
+        (all? (lambda (pos) (not (= (car p) pos))) (cdr p))
+        (all? (lambda (pos offset)  (not (= (car p) (+ offset pos)))) (cdr p) offsets)
+        (all? (lambda (pos offset)  (not (= (car p) (- pos offset)))) (cdr p) offsets))))
   (define (adjoin-position new-row k rest-of-queens) (cons new-row rest-of-queens))
   (define (queen-cols k)
     (if 
       (= k 0)  
-      (list nil)
+      (list empty-board)
       (filter (lambda (positions) (safe? k positions)) 
         (flatmap
           (lambda (rest-of-queens) 
