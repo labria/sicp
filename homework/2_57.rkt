@@ -66,10 +66,14 @@
             (make-product (multiplier exp) (deriv (multiplicand exp) var))
             (make-product (deriv (multiplier exp) var) (multiplicand exp))))
         ((exponentiation? exp)
-          (make-product 
-            (make-exponentiation (base exp) (make-diff (exponent exp) 1))
+          (make-product
+            (make-product
+              (exponent exp)
+              (make-exponentiation (base exp) (make-diff (exponent exp) 1)))
             (deriv (base exp) var)))
         (else
         (error "unknown expression type: DERIV" exp))))
 
 (deriv '(* x y (+ x 3)) 'x)
+
+(deriv '(** x 3) 'x)
