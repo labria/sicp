@@ -15,6 +15,7 @@
   (cond ((= n 0) 1)
         ((even? n) (square (fast-expt b (/ n 2))))
         (else (* b (fast-expt b (- n 1))))))
+
 (define (variable? x) (symbol? x))
 (define (same-variable? v1 v2)
   (and (variable? v1) (variable? v2) (eq? v1 v2)))
@@ -53,6 +54,7 @@
 (define (make-exponentiation b e)
   (cond ((= 0 e) 1)
         ((= 1 e) b)
+        ((=number? b 1) 1)
         ((and (number? e) (number? b)) (fast-expt b e))
         (else (list '** b e))))
 
